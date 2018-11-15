@@ -3,12 +3,18 @@
 * proxychains in worker path
 * redis installed and running somewhere
 * elasticsearch installed (for output of some jobs)
+* shodan api key, it's used by the worker.  it's free, go get one.
 ## installation
 `git clone https://github.com/cleverhandle1/bipolar.git
+
 cd bipolar
+
 pip install -r requirements
+
  export SHODAN_API="<apikey>"
+
  export REDIS_PASS="<password>"
+
  export REDIS_HOST=localhost`
 
 ## start worker
