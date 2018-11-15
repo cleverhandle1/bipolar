@@ -1,8 +1,9 @@
 # bipolar
 ## purpose
-the purpose of this project is to create an infinitly scaleable job worker infrastructure with a focus on offensive security tasks, such as port scanning and grabbing pages. tasks are extremly easy to modify or create from scrath. most connections are made via tor socks proxy running on localhost on the worker.
+the purpose of this project is to create an infinitely scaleable job worker infrastructure with a focus on offensive security tasks, such as port scanning and grabbing pages. tasks are extremely easy to modify or create from scratch. most connections are made via tor socks proxy running on localhost on the worker.
 
-current list of precoded tasks:
+current list of pre-coded tasks:
+
 * bipolar.http_get (pulls a page and returns the contents)
 * bipolar.net_explode (takes a cidr address and returns an ip list)
 * bipolar.proxy_check_socks (checks a host and port for socks proxies)
@@ -11,12 +12,11 @@ current list of precoded tasks:
 * bipolar.sd_get_honeyscore (gets the honeyscore of a host from shodan)
 * bipolar.sd_get_host (gets host information from shodan)
 * bipolar.sd_get_ip_details (gets ip information from shodan)
-* bipolar.sd_get_ips (general function) 
+* bipolar.sd_get_ips (general function)
 * bipolar.sd_get_search (returns a list of ips based on a shodan query)
 * bipolar.sqli_check (runs a sqlmap against a url)
 
 job workers connect to redis (required), host creating jobs runs elasticsearch for job output (optional but highly recommended), jobs are distributed equally across multiple workers, tasks are executed and, if enabled, tor is used.
-
 ## preqreq
 * proxychains in worker path
 * tor proxy running on localhost:9050
