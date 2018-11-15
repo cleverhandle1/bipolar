@@ -51,8 +51,8 @@ def net_explode(ip_net):
     return result
 
 @app.task
-def scan_nmap(ips, use_tor):
-    result = nmap_scan(ips, use_tor)
+def scan_nmap(ips):
+    result = nmap_scan(ips)
     return result 
 
 #todo

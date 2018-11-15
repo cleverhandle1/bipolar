@@ -6,7 +6,16 @@ from elasticsearch import helpers, Elasticsearch
 import sys
 import json
 
-query = sys.argv[1]
+in_file = sys.argv[1]
+
+urls = []
+with open(in_file) as f:
+    data = f.readlines()
+    for entry in data:
+        if 'http' in entry:
+            urls.append(entry.strip())
+        else:
+            urls.append('http://' + entry.strip())
 
 my_group1 = group([bipolar.http_get.s(url) for url in urls])
 group1_results = my_group1.apply_async()

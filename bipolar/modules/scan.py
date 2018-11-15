@@ -12,11 +12,10 @@ def explode_net(ip_net):
         ips = [ipaddr.IPNetwork(ip_net).ip.exploded]
     return ips
   
-def nmap_scan(ip, use_tor):
+def nmap_scan(ip):
     print('executing nmap scan against: {}'.format(ip))
-    print('use_tor: {}'.format(use_tor))
     nm = nmap.PortScanner()
-    scan_results = nm.scan(hosts=ip, arguments='-sT --top-ports=20 -Pn -T polite', use_tor=use_tor)
+    scan_results = nm.scan(hosts=ip, arguments='-sT --top-ports=20 -Pn -T polite')
     return scan_results 
 
 def check_proxy_socks(ip, port):

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from bipolar import bipolar
+import bipolar
 from celery import group
 from time import sleep
 from elasticsearch import helpers, Elasticsearch
@@ -7,10 +7,9 @@ import sys
 import json
 
 ip_net = sys.argv[1]
-use_tor = sys.argv[2]
 
 ips = bipolar.net_explode.delay(ip_net).get()
-my_group = group([bipolar.scan_nmap.s(ip, use_tor=use_tor) for ip in ips])
+my_group = group([bipolar.scan_nmap.s(ip) for ip in ips])
 group_results = my_group.apply_async()
 while not group_results.ready():
     print('waiting for jobs to complete')

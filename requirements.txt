@@ -2,3 +2,6 @@ celery
 shodan
 redis
 python-nmap
+ipaddr
+elasticsearch
+elasticsearch-dsl
