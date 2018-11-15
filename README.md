@@ -6,14 +6,14 @@ current list of precoded tasks:
 * bipolar.http_get (pulls a page and returns the contents)
 * bipolar.net_explode (takes a cidr address and returns an ip list)
 * bipolar.proxy_check_socks (checks a host and port for socks proxies)
-* bipolar.scan_hydra (start hydra scan against a host)
-* bipolar.scan_nmap (start an nmap scan against a host)
-* bipolar.sd_get_honeyscore
-* bipolar.sd_get_host
-* bipolar.sd_get_ip_details
-* bipolar.sd_get_ips
-* bipolar.sd_get_search
-* bipolar.sqli_check
+* bipolar.scan_hydra (starts hydra scan against a host)
+* bipolar.scan_nmap (starts an nmap scan against a host)
+* bipolar.sd_get_honeyscore (gets the honeyscore of a host from shodan)
+* bipolar.sd_get_host (gets host information from shodan)
+* bipolar.sd_get_ip_details (gets ip information from shodan)
+* bipolar.sd_get_ips (general function) 
+* bipolar.sd_get_search (returns a list of ips based on a shodan query)
+* bipolar.sqli_check (runs a sqlmap against a url)
 
 job workers connect to redis (required), host creating jobs runs elasticsearch for job output (optional but highly recommended), jobs are distributed equally across multiple workers, tasks are executed and, if enabled, tor is used.
 
