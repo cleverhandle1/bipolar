@@ -11,9 +11,15 @@ import os
 redis_pass = os.environ['REDIS_PASS']
 redis_host = os.environ['REDIS_HOST']
 
+#app = Celery('bipolar',
+#              broker='redis://redis:{}@{}'.format(redis_pass, redis_host),
+#              backend='redis://redis:{}@{}'.format(redis_pass, redis_host),
+#              fixups=[]
+#            )
+
 app = Celery('bipolar',
-              broker='redis://redis:{}@{}'.format(redis_pass, redis_host),
-              backend='redis://redis:{}@{}'.format(redis_pass, redis_host),
+        broker='redis://redis:{}@{}'.format(redis_pass, redis_host),
+        backend='elasticsearch://localhost:9200',
               fixups=[]
             )
 

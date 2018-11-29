@@ -1,20 +1,12 @@
-#!/usr/bin/env python
-import sys
-import json
-from elasticsearch_dsl import Search
 from elasticsearch import Elasticsearch
-
-query_port = int(sys.argv[1])
+import json
+import sys
 
 es = Elasticsearch()
 
-s = Search(using=es, index="celery")
-s = s.query("query_string", query='scanstats', analyze_wildcard=True)
-
-response = s.scan()
-
-for res in response:
-    json_res = json.loads(res.result)['result']
+try:
+    res = es.get(index="celery", doc_type='backend', id='celery-task-meta-' + sys.argv[1])
+    json_res = json.loads(res['_source']['result'])['result']
     for ip in json_res['scan'].keys():
         open_ports = []
         if 'tcp' in json_res['scan'][ip].keys():
@@ -22,6 +14,9 @@ for res in response:
                 state = json_res['scan'][ip]['tcp'][port]['state']
                 if state == 'open':
                     open_ports.append(int(port))
-        if query_port in open_ports:
-            print(ip)
+        print(json.dumps({'ip': ip, 'open_ports':open_ports}))
+
+except Exception as e:
+    print(e)
+
 

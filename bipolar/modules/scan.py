@@ -50,7 +50,7 @@ def check_proxy_socks(ip, port):
 
 def get_http(url):
     try:
-        result = requests.get(url, proxies={'http':'socks5://localhost:9050', 'https':'socks5://localhost:9050'}, timeout=10)
+        result = requests.get(url, proxies={'http':'socks5://localhost:9050', 'https':'socks5://localhost:9050'}, timeout=30)
         output = json.dumps({'status': result.status_code, 'content': result.content, 'url':url}, encoding='ISO-8859-1') 
         return output
     except Exception as e:

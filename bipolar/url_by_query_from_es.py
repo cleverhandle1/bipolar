@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import json
 import sys
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import QueryString
@@ -8,10 +9,12 @@ query = sys.argv[1]
 
 es = Elasticsearch()
 
-s = Search(using=es, index="fnhttp") 
+s = Search(using=es, index="celery") 
 s = s.query("query_string", query=query, analyze_wildcard=True)
 
 response = s.scan()
 
 for hit in response:
-    print(hit.url)
+    if query in json.loads(json.loads(hit.result)['result'])['content']:
+        print json.loads(json.loads(hit.result)['result'])['url']
+

@@ -19,18 +19,20 @@ with open(in_file) as f:
 
 my_group1 = group([bipolar.http_get.s(url) for url in urls])
 group1_results = my_group1.apply_async()
-while not group1_results.ready():
-    print('waiting for jobs to complete')
-    sleep(10)
-group1_results = group1_results.get()
+for child in group1_results.children:
+    print(child.as_tuple()[0][0])
 
-output = []
-for results in group1_results:
-    if results is not None:
-        output.append(json.loads(results))
-
-print(output)
-
-es = Elasticsearch(timeout=999999)
-helpers.bulk(es, output, index='fnhttp', doc_type="doc")
-
+#while not group1_results.ready():
+#    print('waiting for jobs to complete')
+#    sleep(10)
+#group1_results = group1_results.get()
+#
+#output = []
+#for results in group1_results:
+#    if results is not None:
+#        output.append(json.loads(results))
+#
+#es = Elasticsearch(timeout=999999)
+#helpers.bulk(es, output, index='fnhttp', doc_type="doc")
+#
+#print(output)
