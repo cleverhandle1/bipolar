@@ -15,19 +15,5 @@ with open(sqli_file) as f:
 
 my_group = group([bipolar.sqli_check.s(url) for url in urls])
 group_results = my_group.apply_async()
-print(group_results)
-while not group_results.ready():
-    print('waiting for jobs to complete')
-    sleep(10)
-    group_results = group_results.get()
-
-output = []
-for results in group1_results:
-    if results is not None:
-        for i in results:
-            output.append(json.dumps(i))
-
-print(output)
-
-es = Elasticsearch(timeout=999999)
-helpers.bulk(es, output, index='fnsqli', doc_type="doc")
+for child in group_results.children:
+    print(child.as_tuple()[0][0])

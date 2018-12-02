@@ -82,6 +82,11 @@ def sqli_check(url):
     result = check_sqli(url)
     return result
 
+@app.task
+def cert_get(ip):
+    result = get_cert(ip)
+    return result
+
 if __name__ == '__main__':
     app = current_app._get_current_object()
 
