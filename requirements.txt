@@ -1,6 +1,6 @@
 celery
 shodan
-redis
+redis==2.10.6
 python-nmap
 ipaddr
 elasticsearch

@@ -4,24 +4,19 @@ import json
 from elasticsearch_dsl import Search
 from elasticsearch import Elasticsearch
 
-query_port = int(sys.argv[1])
+index = sys.argv[1]
+query_port = int(sys.argv[2])
+start = sys.argv[3]
+end = sys.argv[4]
 
-es = Elasticsearch()
+es = Elasticsearch(hosts=['192.168.0.69'])
 
-s = Search(using=es, index="celery")
-s = s.query("query_string", query='scanstats', analyze_wildcard=True)
+s = Search(using=es, index=index)
+s = s.query("query_string", query='open_port:{}'.format(query_port), analyze_wildcard=True)
+s = s.filter('range', ** {'@timestamp': {'gte': start, 'lt': end}})
 
 response = s.scan()
 
 for res in response:
-    json_res = json.loads(res.result)['result']
-    for ip in json_res['scan'].keys():
-        open_ports = []
-        if 'tcp' in json_res['scan'][ip].keys():
-            for port in json_res['scan'][ip]['tcp'].keys():
-                state = json_res['scan'][ip]['tcp'][port]['state']
-                if state == 'open':
-                    open_ports.append(int(port))
-        if query_port in open_ports:
-            print(ip)
-
+    print(res.ip)
+    

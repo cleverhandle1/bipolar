@@ -13,7 +13,7 @@ with open(in_file) as f:
         ips.append(entry.strip())
 
 my_group1 = group([bipolar.cert_get.s(ip) for ip in ips])
-group1_results = my_group1.apply_async()
+group1_results = my_group1.apply_async(queue='scan')
 for child in group1_results.children:
     print(child.as_tuple()[0][0])
 

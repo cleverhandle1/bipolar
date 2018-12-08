@@ -18,7 +18,7 @@ with open(in_file) as f:
             urls.append('http://' + entry.strip())
 
 my_group1 = group([bipolar.http_get.s(url) for url in urls])
-group1_results = my_group1.apply_async()
+group1_results = my_group1.apply_async(queue='scan')
 for child in group1_results.children:
     print(child.as_tuple()[0][0])
 
