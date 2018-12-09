@@ -9,7 +9,7 @@ import json
 ip_net = sys.argv[1]
 
 ips = bipolar.net_explode.delay(ip_net).get()
-my_group = group([bipolar.scan_open_dns_relay.s(ip) for ip in ips])
+my_group = group([bipolar.scan_dns_recursion.s(ip) for ip in ips])
 group_results = my_group.apply_async(queue='scan')
 for child in group_results.children:
     print(child.as_tuple()[0][0])
