@@ -92,6 +92,17 @@ def check_sqli(url):
         print(e)
         return e
 
+def get_heartbleed(ip):
+    try:
+        result = subprocess.check_output(
+            "python ~/src/heartbleed-poc/heartbleed-poc.py -n 100 -f ~/src/sf_bipolar/data/output/heartbleed/{ip}.bin {ip}".format(ip=ip),
+            stderr=subprocess.STDOUT,
+            shell=True)
+        return result
+    except Exception as e:
+        print(e)
+        return e
+
 def get_cert(ip):
     import socks_new
     s = socks_new.socksocket()

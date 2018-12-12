@@ -98,6 +98,11 @@ def sqli_check(url):
     result = check_sqli(url)
     return result
 
+@app.task(queue='scan')
+def heartbleed_get(ip):
+    result = get_heartbleed(ip)
+    return result
+
 @app.task
 def cert_get(ip):
     result = get_cert(ip)
