@@ -6,6 +6,9 @@ import json
 import subprocess
 import ssl
 import dns.resolver
+from selenium.webdriver.common.proxy import Proxy, ProxyType
+from selenium import webdriver
+import urlparse as parse
 
 def explode_net(ip_net):
     ips = [x.exploded for x in ipaddr.IPNetwork(ip_net).iterhosts()]
@@ -74,7 +77,7 @@ def check_proxy_socks(ip, port):
 
 def get_http(url):
     try:
-       result = requests.get(url, proxies={'http':'socks5://localhost:9050', 'https':'socks5://localhost:9050'}, timeout=30)
+       result = requests.get(url, proxies={'http':'socks5://localhost:9050', 'https':'socks5://localhost:9050'}, timeout=30, verify=False)
        output = json.dumps({'status': result.status_code, 'content': result.content, 'url':url}, encoding='ISO-8859-1') 
        return output
     except Exception as e:
@@ -113,3 +116,21 @@ def get_cert(ip):
     s.connect((ip, 443))
     cert = s.getpeercert()
     return cert
+
+def get_screenshot(url):
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+
+    prox = Proxy()
+    prox.proxy_type = ProxyType.MANUAL
+    prox.http_proxy = 'http://localhost:8118'
+    prox.ssl_proxy = 'http://localhost:8118'
+
+    capabilities = webdriver.DesiredCapabilities.CHROME
+    prox.add_to_capabilities(capabilities)
+
+    driver = webdriver.Chrome(options=options, desired_capabilities=capabilities)
+    driver.get('{}'.format(url))
+    hostname = parse.urlparse(url).netloc
+    driver.get_screenshot_as_file('/tmp/screenshots/{}.png'.format(hostname))
+

@@ -113,6 +113,11 @@ def scan_dns_recursion(ip):
     result = dns_recursion_scan(ip)
     return result
 
+@app.task
+def screenshot_get(url):
+    result = get_screenshot(url)
+    return result
+
 if __name__ == '__main__':
     app = current_app._get_current_object()
 
